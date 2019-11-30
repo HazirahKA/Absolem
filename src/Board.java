@@ -40,8 +40,7 @@ public class Board extends JPanel implements ActionListener {
     private Image apple;
     private Image head;
 
-    public Board()
-    {
+    public Board() {
         initBoard();
     }
 
@@ -53,39 +52,6 @@ public class Board extends JPanel implements ActionListener {
         setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
         loadImages();
         initGame();
-    }
-
-    private void loadImages() {
-        ImageIcon imgB = new ImageIcon("src/Images/body.png");
-        body = imgB.getImage();
-
-        ImageIcon imgA = new ImageIcon("src/Images/apple.png");
-        apple = imgA.getImage();
-
-        ImageIcon imgH = new ImageIcon("src/Images/head.png");
-        head = imgH.getImage();
-    }
-
-    private void initGame() {
-        dots = 3;
-
-        for (int z = 0; z < dots; z++) {
-            x[z] = 50 - z * 10;
-            y[z] = 50;
-        }
-
-        locateApple();
-
-        timer = new Timer(DELAY, this);
-        timer.start();
-    }
-
-    private void locateApple() {
-        int r = (int) (Math.random() * RAND_POS);
-        apple_x = ((r * DOT_SIZE));
-
-        r = (int) (Math.random() * RAND_POS);
-        apple_y = ((r * DOT_SIZE));
     }
 
     private class TAdapter extends KeyAdapter {
@@ -120,8 +86,143 @@ public class Board extends JPanel implements ActionListener {
         }
     }
 
+    private void loadImages() {
+        ImageIcon imgB = new ImageIcon("src/Images/body.png");
+        body = imgB.getImage();
+
+        ImageIcon imgA = new ImageIcon("src/Images/apple.png");
+        apple = imgA.getImage();
+
+        ImageIcon imgH = new ImageIcon("src/Images/head.png");
+        head = imgH.getImage();
+    }
+
+    private void initGame() {
+        dots = 3;
+
+        for (int z = 0; z < dots; z++) {
+            x[z] = 50 - z * 10;
+            y[z] = 50;
+        }
+
+        locateApple();
+
+        timer = new Timer(DELAY, this);
+        timer.start();
+    }
+
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        doDrawing(g);
+    }
+
+    private void doDrawing(Graphics g) {
+        if (inGame) {
+            g.drawImage(apple, apple_x, apple_y, this);
+
+            for (int z = 0; z < dots; z++) {
+                if (z == 0) {
+                    g.drawImage(head, x[z], y[z], this);
+                }
+                else {
+                    g.drawImage(body, x[z], y[z], this);
+                }
+            }
+            Toolkit.getDefaultToolkit().sync();
+        }
+        else {
+            gameOver(g);
+        }
+    }
+
+    private void gameOver(Graphics g) {
+        String msg = "Game Over";
+        Font small = new Font("Arial", Font.BOLD, 60);
+        FontMetrics metric = getFontMetrics(small);
+
+        g.setColor(Color.red);
+        g.setFont(small);
+        g.drawString(msg, (B_WIDTH - metric.stringWidth(msg)) / 2, B_HEIGHT / 2);
+        repaint();
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (inGame) {
+            checkApple();
+            checkCollision();
+            move();
+        }
 
+        repaint();
+    }
+
+    private void checkApple() {
+        if ((x[0] == apple_x) && (y[0] == apple_y)) {
+
+            dots++;
+            locateApple();
+        }
+    }
+
+    private void move() {
+        for (int z = dots; z > 0; z--) {
+            x[z] = x[(z - 1)];
+            y[z] = y[(z - 1)];
+        }
+
+        if (leftArrow) {
+            x[0] -= DOT_SIZE;
+        }
+
+        if (rightArrow) {
+            x[0] += DOT_SIZE;
+        }
+
+        if (upArrow) {
+            y[0] -= DOT_SIZE;
+        }
+
+        if (downArrow) {
+            y[0] += DOT_SIZE;
+        }
+    }
+
+    private void checkCollision() {
+        for (int z = dots; z > 0; z--) {
+
+            if ((z > 4) && (x[0] == x[z]) && (y[0] == y[z])) {
+                inGame = false;
+            }
+        }
+
+        if (y[0] >= B_HEIGHT) {
+            inGame = false;
+        }
+
+        if (y[0] < 0) {
+            inGame = false;
+        }
+
+        if (x[0] >= B_WIDTH) {
+            inGame = false;
+        }
+
+        if (x[0] < 0) {
+            inGame = false;
+        }
+
+        if (!inGame) {
+            timer.stop();
+        }
+    }
+
+    private void locateApple() {
+        int r = (int) (Math.random() * RAND_POS);
+        apple_x = ((r * DOT_SIZE));
+
+        r = (int) (Math.random() * RAND_POS);
+        apple_y = ((r * DOT_SIZE));
     }
 }
