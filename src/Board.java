@@ -40,8 +40,32 @@ public class Board extends JPanel implements ActionListener {
     private Image apple;
     private Image head;
 
+    public Board()
+    {
+        initBoard();
+    }
+
+    private void initBoard() {
+        setBackground(Color.black);
+        setFocusable(true);
+
+        setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
+        loadImages();
+    }
+
+    private void loadImages() {
+        ImageIcon imgB = new ImageIcon("src/Images/body.png");
+        body = imgB.getImage();
+
+        ImageIcon imgA = new ImageIcon("src/Images/apple.png");
+        apple = imgA.getImage();
+
+        ImageIcon imgH = new ImageIcon("src/Images/head.png");
+        head = imgH.getImage();
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        
+
     }
 }
