@@ -51,6 +51,7 @@ public class Board extends JPanel implements ActionListener {
 
         setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
         loadImages();
+        initGame();
     }
 
     private void loadImages() {
@@ -62,6 +63,20 @@ public class Board extends JPanel implements ActionListener {
 
         ImageIcon imgH = new ImageIcon("src/Images/head.png");
         head = imgH.getImage();
+    }
+
+    private void initGame() {
+        dots = 3;
+
+        for (int z = 0; z < dots; z++) {
+            x[z] = 50 - z * 10;
+            y[z] = 50;
+        }
+
+
+
+        timer = new Timer(DELAY, this);
+        timer.start();
     }
 
     @Override
