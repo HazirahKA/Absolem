@@ -46,6 +46,7 @@ public class Board extends JPanel implements ActionListener {
     }
 
     private void initBoard() {
+        addKeyListener(new TAdapter());
         setBackground(Color.black);
         setFocusable(true);
 
@@ -73,10 +74,50 @@ public class Board extends JPanel implements ActionListener {
             y[z] = 50;
         }
 
-
+        locateApple();
 
         timer = new Timer(DELAY, this);
         timer.start();
+    }
+
+    private void locateApple() {
+        int r = (int) (Math.random() * RAND_POS);
+        apple_x = ((r * DOT_SIZE));
+
+        r = (int) (Math.random() * RAND_POS);
+        apple_y = ((r * DOT_SIZE));
+    }
+
+    private class TAdapter extends KeyAdapter {
+        @Override
+        public void keyPressed(KeyEvent e) {
+
+            int key = e.getKeyCode();
+
+            if ((key == KeyEvent.VK_LEFT) && (!rightArrow)) {
+                leftArrow = true;
+                upArrow = false;
+                downArrow = false;
+            }
+
+            if ((key == KeyEvent.VK_RIGHT) && (!leftArrow)) {
+                rightArrow = true;
+                upArrow = false;
+                downArrow = false;
+            }
+
+            if ((key == KeyEvent.VK_UP) && (!downArrow)) {
+                upArrow = true;
+                rightArrow = false;
+                leftArrow = false;
+            }
+
+            if ((key == KeyEvent.VK_DOWN) && (!upArrow)) {
+                downArrow = true;
+                rightArrow = false;
+                leftArrow = false;
+            }
+        }
     }
 
     @Override
