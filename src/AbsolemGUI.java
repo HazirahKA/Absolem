@@ -24,5 +24,18 @@ public class AbsolemGUI extends JFrame implements ActionListener {
         setJMenuBar(this.dropMenu);
         setResizable(false);
         setVisible(true);
+
+        initUI();
+    }
+
+    private void initUI() {
+        add(new Board());
+
+        setResizable(false);
+        pack();
+
+        setTitle("Absolem");
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 }
