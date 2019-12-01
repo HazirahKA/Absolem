@@ -1,9 +1,5 @@
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import javax.swing.*;
 
 public class AbsolemGUI extends JFrame implements ActionListener {
@@ -44,14 +40,6 @@ public class AbsolemGUI extends JFrame implements ActionListener {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-
-    public static void main(String[] args) {
-        EventQueue.invokeLater(() -> {
-            JFrame ex = new AbsolemGUI();
-            ex.setVisible(true);
-        });
-    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.newGame)
@@ -61,15 +49,10 @@ public class AbsolemGUI extends JFrame implements ActionListener {
 
         if (e.getSource() == this.saveGame)
         {
-            try{
-                FileOutputStream fileOutputStream = new FileOutputStream("absolem.ser");
-                ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-                objectOutputStream.writeObject(AbsolemGUI.this);
-                objectOutputStream.close();
-                fileOutputStream.close();
-            }catch (IOException ex){
-                ex.printStackTrace();
-            }
+        }
+
+        if (e.getSource() == this.loadGame)
+        {
         }
     }
 }
