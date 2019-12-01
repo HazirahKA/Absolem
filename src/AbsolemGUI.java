@@ -9,6 +9,7 @@ public class AbsolemGUI extends JFrame implements ActionListener {
     private JMenuItem loadGame;
     private JMenuItem saveGame;
     private JMenuItem backMenu;
+    private Board Board;
 
     public AbsolemGUI() {
         this.newGame = new JMenuItem("New Game");
@@ -54,10 +55,28 @@ public class AbsolemGUI extends JFrame implements ActionListener {
 
         if (e.getSource() == this.saveGame)
         {
+            /*try{
+                FileOutputStream fos = new FileOutputStream("absolem_data.ser");
+                ObjectOutputStream oos = new ObjectOutputStream(fos);
+                oos.writeObject(AbsolemGUI.this);
+                oos.close();
+                fos.close();
+                JOptionPane.showMessageDialog(null, "Game is successfully saved!","Saved Game!",JOptionPane.INFORMATION_MESSAGE);
+            }catch (IOException ex){
+                ex.printStackTrace();
+            }*/
         }
 
         if (e.getSource() == this.loadGame)
         {
+            /*try {
+                //Set the current Connect four object references and values equal to the previously saved games values
+                ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("absolem_data.ser"));
+                AbsolemGUI previousGame = (AbsolemGUI) objectInputStream.readObject();
+                AbsolemGUI.this.Board = previousGame.Board;
+            }catch(Exception ex){
+                ex.printStackTrace();
+            }*/
         }
 
         if (e.getSource() == this.backMenu)

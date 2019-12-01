@@ -1,12 +1,6 @@
-import java.awt.Font;
-import java.awt.Color;
-import java.awt.Image;
-import java.awt.Toolkit;
-import java.awt.Graphics;
+import java.awt.*;
 import javax.swing.Timer;
 import javax.swing.JPanel;
-import java.awt.Dimension;
-import java.awt.FontMetrics;
 import javax.swing.ImageIcon;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyAdapter;
@@ -15,12 +9,12 @@ import java.awt.event.ActionListener;
 
 public class Board extends JPanel implements ActionListener {
 
-    private final int B_WIDTH = 800;
-    private final int B_HEIGHT = 800;
-    private final int DOT_SIZE = 25;
-    private final int ALL_DOTS = 900;
-    private final int RAND_POS = 29;
-    private final int SPEED = 110;
+    private final int B_WIDTH = 800; //width of board
+    private final int B_HEIGHT = 800; //height of board
+    private final int DOT_SIZE = 25; //size of each dot
+    private final int ALL_DOTS = 900; //size of all dots
+    private final int RAND_POS = 29; //random position for apple
+    private final int SPEED = 110; //the speed of absolem
 
     private final int x[] = new int[ALL_DOTS];
     private final int y[] = new int[ALL_DOTS];
@@ -28,6 +22,7 @@ public class Board extends JPanel implements ActionListener {
     private int dots;
     private int apple_x;
     private int apple_y;
+    private int score = 0;
 
     private boolean leftArrow = false;
     private boolean rightArrow = true;
@@ -134,6 +129,16 @@ public class Board extends JPanel implements ActionListener {
         else {
             gameOver(g);
         }
+
+        //Draw the scores
+        g.setColor(Color.white);
+        g.setFont(new Font("arial", Font.PLAIN, 16));
+        g.drawString("Scores: " + score, 0, 15);
+
+        //Draw the length of snake
+        g.setColor(Color.white);
+        g.setFont(new Font("arial", Font.PLAIN, 16));
+        g.drawString("Length: " + dots, 0, 35);
     }
 
     private void gameOver(Graphics g) {
@@ -162,6 +167,7 @@ public class Board extends JPanel implements ActionListener {
         if ((x[0] == apple_x) && (y[0] == apple_y)) {
 
             dots++;
+            score++;
             locateApple();
         }
     }
