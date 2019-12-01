@@ -8,18 +8,22 @@ public class AbsolemGUI extends JFrame implements ActionListener {
     private JMenuItem newGame;
     private JMenuItem loadGame;
     private JMenuItem saveGame;
+    private JMenuItem backMenu;
 
     public AbsolemGUI() {
         this.newGame = new JMenuItem("New Game");
         this.loadGame = new JMenuItem("Load Game");
         this.saveGame = new JMenuItem("Save Game");
+        this.backMenu = new JMenuItem("Back To Menu");
         this.newGame.addActionListener(this);
         this.loadGame.addActionListener(this);
         this.saveGame.addActionListener(this);
+        this.backMenu.addActionListener(this);
         this.file = new JMenu("File");
         this.file.add(this.newGame);
-        this.file.add(this.loadGame);
         this.file.add(this.saveGame);
+        this.file.add(this.loadGame);
+        this.file.add(this.backMenu);
         this.dropMenu = new JMenuBar();
         this.dropMenu.add(this.file);
         setJMenuBar(this.dropMenu);
@@ -54,6 +58,12 @@ public class AbsolemGUI extends JFrame implements ActionListener {
 
         if (e.getSource() == this.loadGame)
         {
+        }
+
+        if (e.getSource() == this.backMenu)
+        {
+            MenuGUI menu = new MenuGUI();
+            this.dispose();
         }
     }
 }
