@@ -17,6 +17,7 @@ public class MenuGUI extends JFrame implements ActionListener {
     public MenuGUI() {
         super("Menu - Absolem");
         setSize(800, 800);
+        setLocationRelativeTo(null);
 
         JFrame mainFrame = new JFrame();
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
