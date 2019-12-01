@@ -52,6 +52,7 @@ public class MenuGUI extends JFrame implements ActionListener {
         if (e.getSource() == this.newGame)
         {
             AbsolemGUI absolem = new AbsolemGUI();
+            this.dispose();
         }
 
         if (e.getSource() == this.saveGame)
