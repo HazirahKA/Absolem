@@ -1,3 +1,8 @@
+/**
+ * @author Hazirah Khair Anuar
+ * T00208983
+ */
+
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.KeyEvent;

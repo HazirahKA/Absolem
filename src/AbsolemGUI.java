@@ -1,3 +1,8 @@
+/**
+ * @author Hazirah Khair Anuar
+ * T00208983
+ */
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
