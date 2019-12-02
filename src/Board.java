@@ -1,11 +1,10 @@
 import java.awt.*;
-import javax.swing.Timer;
-import javax.swing.JPanel;
-import javax.swing.ImageIcon;
+import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.*;
 
 public class Board extends JPanel implements ActionListener {
 
@@ -23,6 +22,7 @@ public class Board extends JPanel implements ActionListener {
     private int apple_x;
     private int apple_y;
     private int score = 0;
+    private String highScore = "";
 
     private boolean leftArrow = false;
     private boolean rightArrow = true;
@@ -123,6 +123,11 @@ public class Board extends JPanel implements ActionListener {
                 else {
                     g.drawImage(body, x[z], y[z], this);
                 }
+
+                if (highScore.equals("")){
+                    //intialize the highscore
+                    highScore = this.getHighScore();
+                }
             }
             Toolkit.getDefaultToolkit().sync();
         }
@@ -139,6 +144,11 @@ public class Board extends JPanel implements ActionListener {
         g.setColor(Color.white);
         g.setFont(new Font("arial", Font.PLAIN, 16));
         g.drawString("Length: " + dots, 0, 35);
+
+        //Draw the highscore
+        g.setColor(Color.white);
+        g.setFont(new Font("arial", Font.PLAIN, 16));
+        g.drawString("Highcore: " + highScore, 0, 55);
     }
 
     private void gameOver(Graphics g) {
@@ -167,7 +177,7 @@ public class Board extends JPanel implements ActionListener {
         if ((x[0] == apple_x) && (y[0] == apple_y)) {
 
             dots++;
-            score++;
+            score += 10;
             locateApple();
         }
     }
@@ -200,23 +210,28 @@ public class Board extends JPanel implements ActionListener {
 
             if ((z > 4) && (x[0] == x[z]) && (y[0] == y[z])) {
                 inGame = false;
+                checkScore();
             }
         }
 
         if (y[0] >= B_HEIGHT) {
             inGame = false;
+            checkScore();
         }
 
         if (y[0] < 0) {
             inGame = false;
+            checkScore();
         }
 
         if (x[0] >= B_WIDTH) {
             inGame = false;
+            checkScore();
         }
 
         if (x[0] < 0) {
             inGame = false;
+            checkScore();
         }
 
         if (!inGame) {
@@ -230,5 +245,73 @@ public class Board extends JPanel implements ActionListener {
 
         r = (int) (Math.random() * RAND_POS);
         apple_y = ((r * DOT_SIZE));
+    }
+
+    public String getHighScore(){
+        //format: Hazirah:100
+        FileReader readFile = null;
+        BufferedReader reader = null;
+
+        try{
+            readFile = new FileReader("highscore.dat");
+            reader = new BufferedReader(readFile);
+            return reader.readLine();
+        }
+        catch (Exception e){
+            return "Default:0";
+        }
+        finally{
+           try{
+               if(reader != null){
+                   reader.close();
+               }
+           }
+           catch (Exception e){
+               e.printStackTrace();
+           }
+        }
+    }
+
+    public void checkScore(){
+        if(highScore.equals("")){
+            return;
+        }
+
+        if (score > Integer.parseInt((highScore.split(":")[1]))){
+            //user has set a new record
+            String name = JOptionPane.showInputDialog("You has set a new highscore! \nEnter your name: ");
+            highScore = name + ":" + score;
+
+            File scoreFile = new File("highscore.dat");
+
+            if (!scoreFile.exists()){
+                try{
+                    scoreFile.createNewFile();
+                }
+                catch (IOException e){
+                    e.printStackTrace();
+                }
+            }
+
+            FileWriter writeFile = null;
+            BufferedWriter writer = null;
+
+            try{
+                writeFile = new FileWriter(scoreFile);
+                writer = new BufferedWriter(writeFile);
+                writer.write(this.highScore);
+            }
+            catch (Exception e){
+                //errors
+            }
+            finally{
+                try{
+                    if (writer != null){
+                        writer.close();
+                    }
+                }
+                catch (Exception e) {}
+            }
+        }
     }
 }
