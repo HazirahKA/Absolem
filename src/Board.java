@@ -247,7 +247,7 @@ public class Board extends JPanel implements ActionListener {
         apple_y = ((r * DOT_SIZE));
     }
 
-    public String getHighScore(){
+    public static String getHighScore(){
         //format: Hazirah:100
         FileReader readFile = null;
         BufferedReader reader = null;

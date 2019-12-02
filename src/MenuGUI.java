@@ -9,8 +9,7 @@ public class MenuGUI extends JFrame implements ActionListener {
     private JMenu file;
     private JMenu info;
     private JMenuItem newGame;
-    private JMenuItem loadGame;
-    private JMenuItem saveGame;
+    private JMenuItem highscore;
     private JMenuItem howTo;
     private JPanel backGround;
 
@@ -24,16 +23,13 @@ public class MenuGUI extends JFrame implements ActionListener {
         this.howTo = new JMenuItem("How To Play");
         this.howTo.addActionListener(this);
         this.newGame = new JMenuItem("Play Game");
-        this.loadGame = new JMenuItem("Load Game");
-        this.saveGame = new JMenuItem("Save Game");
         this.newGame.addActionListener(this);
-        this.loadGame.addActionListener(this);
-        this.saveGame.addActionListener(this);
+        this.highscore = new JMenuItem("Score Board");
+        this.highscore.addActionListener(this);
         this.info = new JMenu("Information");
         this.file = new JMenu("File");
         this.file.add(this.newGame);
-        this.file.add(this.loadGame);
-        this.file.add(this.saveGame);
+        this.file.add(this.highscore);
         this.info.add(this.howTo);
         this.dropMenu = new JMenuBar();
         this.dropMenu.add(this.file);
@@ -56,12 +52,9 @@ public class MenuGUI extends JFrame implements ActionListener {
             this.dispose();
         }
 
-        if (e.getSource() == this.saveGame)
+        if (e.getSource() == this.highscore)
         {
-        }
-
-        if (e.getSource() == this.loadGame)
-        {
+            JOptionPane.showMessageDialog(null,"Current highscore is:\n\n" + Board.getHighScore(),"Score Board",JOptionPane.INFORMATION_MESSAGE);
         }
 
         if (e.getSource() == this.howTo)
