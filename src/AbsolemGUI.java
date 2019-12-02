@@ -1,6 +1,5 @@
 /**
  * @author Hazirah Khair Anuar
- * T00208983
  */
 
 import java.awt.event.ActionEvent;
